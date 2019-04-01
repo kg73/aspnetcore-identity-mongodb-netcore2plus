@@ -45,7 +45,6 @@
 		{
 			// serialized nulls can cause havoc in deserialization, overwriting the constructor's initial empty list 
 			var user = new IdentityUser();
-			user.Roles = null;
 			user.Tokens = null;
 			user.Logins = null;
 			user.Claims = null;
@@ -65,7 +64,6 @@
 
 			Expect(user.Logins, Is.Empty);
 			Expect(user.Tokens, Is.Empty);
-			Expect(user.Roles, Is.Empty);
 			Expect(user.Claims, Is.Empty);
 		}
 	}

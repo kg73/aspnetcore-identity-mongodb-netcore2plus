@@ -1,11 +1,11 @@
 ﻿namespace IntegrationTests
 {
-	using System.Linq;
-	using System.Threading.Tasks;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.MongoDB;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
+	using System.Linq;
+	using System.Threading.Tasks;
 
 	// todo low - validate all tests work
 	[TestFixture]
@@ -14,7 +14,7 @@
 		[Test]
 		public async Task HasPassword_NoPassword_ReturnsFalse()
 		{
-			var user = new IdentityUser {UserName = "bob"};
+			var user = new IdentityUser { UserName = "bob" };
 			var manager = GetUserManager();
 			await manager.CreateAsync(user);
 
@@ -26,8 +26,8 @@
 		[Test]
 		public async Task AddPassword_NewPassword_CanFindUserByPassword()
 		{
-			var user = new IdentityUser {UserName = "bob"};
-			var manager = CreateServiceProvider<IdentityUser, IdentityRole>(options =>
+			var user = new IdentityUser { UserName = "bob" };
+			var manager = CreateServiceProvider<IdentityUser>(options =>
 				{
 					options.Password.RequireDigit = false;
 					options.Password.RequireNonAlphanumeric = false;
@@ -48,7 +48,7 @@
 		[Test]
 		public async Task RemovePassword_UserWithPassword_SetsPasswordNull()
 		{
-			var user = new IdentityUser {UserName = "bob"};
+			var user = new IdentityUser { UserName = "bob" };
 			var manager = GetUserManager();
 			await manager.CreateAsync(user);
 			await manager.AddPasswordAsync(user, "testtest");

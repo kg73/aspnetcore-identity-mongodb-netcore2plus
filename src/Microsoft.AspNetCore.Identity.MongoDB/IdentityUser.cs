@@ -1,27 +1,25 @@
 ﻿namespace Microsoft.AspNetCore.Identity.MongoDB
 {
+	using global::MongoDB.Bson;
+	using global::MongoDB.Bson.Serialization.Attributes;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Security.Claims;
-	using System.Threading.Tasks;
-	using global::MongoDB.Bson;
-	using global::MongoDB.Bson.Serialization.Attributes;
 
 	public class IdentityUser
 	{
-        public IdentityUser()
-            : this(() => ObjectId.GenerateNewId().ToString())
-        {
-        }
-        public IdentityUser(Func<string> idGenerator)
-        {
-            Id = idGenerator();
-            Roles = new List<string>();
-            Logins = new List<IdentityUserLogin>();
-            Claims = new List<IdentityUserClaim>();
-            Tokens = new List<IdentityUserToken>();
-        }
+		public IdentityUser()
+			: this(() => ObjectId.GenerateNewId().ToString())
+		{
+		}
+		public IdentityUser(Func<string> idGenerator)
+		{
+			Id = idGenerator();
+			Logins = new List<IdentityUserLogin>();
+			Claims = new List<IdentityUserClaim>();
+			Tokens = new List<IdentityUserToken>();
+		}
 
 		public virtual string Id { get; set; }
 
@@ -53,24 +51,11 @@
 
 		public virtual int AccessFailedCount { get; set; }
 
-        public virtual string LoginProvider { get; set; }
+		public virtual string LoginProvider { get; set; }
 
-        private const string AuthenticatorKeyTokenName = "AuthenticatorKey";
+		private const string AuthenticatorKeyTokenName = "AuthenticatorKey";
 
 		private const string RecoveryCodeTokenName = "RecoveryCodes";
-
-		[BsonIgnoreIfNull]
-		public virtual List<string> Roles { get; set; }
-
-		public virtual void AddRole(string role)
-		{
-			Roles.Add(role);
-		}
-
-		public virtual void RemoveRole(string role)
-		{
-			Roles.Remove(role);
-		}
 
 		[BsonIgnoreIfNull]
 		public virtual string PasswordHash { get; set; }
@@ -155,15 +140,15 @@
 
 		public override string ToString() => UserName;
 
-        public virtual void SetAuthenticatorKey(string key)
-        {
-            SetToken(LoginProvider, AuthenticatorKeyTokenName, key);
-        }
+		public virtual void SetAuthenticatorKey(string key)
+		{
+			SetToken(LoginProvider, AuthenticatorKeyTokenName, key);
+		}
 
-        public virtual string GetAuthenticatorKey()
-        {
-            return GetToken(LoginProvider, AuthenticatorKeyTokenName)?.Value;
-        }
+		public virtual string GetAuthenticatorKey()
+		{
+			return GetToken(LoginProvider, AuthenticatorKeyTokenName)?.Value;
+		}
 
 		public virtual void ReplaceCodes(IEnumerable<string> recoveryCodes)
 		{

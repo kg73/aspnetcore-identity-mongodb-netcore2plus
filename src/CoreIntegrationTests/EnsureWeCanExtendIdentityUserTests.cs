@@ -1,11 +1,11 @@
 ﻿namespace IntegrationTests
 {
-	using System.Linq;
-	using System.Threading.Tasks;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.MongoDB;
 	using Microsoft.Extensions.DependencyInjection;
 	using NUnit.Framework;
+	using System.Linq;
+	using System.Threading.Tasks;
 
 	[TestFixture]
 	public class EnsureWeCanExtendIdentityUserTests : UserIntegrationTestsBase
@@ -21,7 +21,7 @@
 		[SetUp]
 		public void BeforeEachTestAfterBase()
 		{
-			_Manager = CreateServiceProvider<ExtendedIdentityUser, IdentityRole>()
+			_Manager = CreateServiceProvider<ExtendedIdentityUser>()
 				.GetService<UserManager<ExtendedIdentityUser>>();
 			_User = new ExtendedIdentityUser
 			{

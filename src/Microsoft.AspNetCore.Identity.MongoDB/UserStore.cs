@@ -4,14 +4,14 @@
 
 namespace Microsoft.AspNetCore.Identity.MongoDB
 {
+	using global::MongoDB.Bson;
+	using global::MongoDB.Driver;
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
 	using System.Security.Claims;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using global::MongoDB.Bson;
-	using global::MongoDB.Driver;
 
 	/// <summary>
 	///     When passing a cancellation token, it will only be used if the operation requires a database interaction.
@@ -19,7 +19,6 @@ namespace Microsoft.AspNetCore.Identity.MongoDB
 	/// <typeparam name="TUser"></typeparam>
 	public class UserStore<TUser> :
 			IUserPasswordStore<TUser>,
-			IUserRoleStore<TUser>,
 			IUserLoginStore<TUser>,
 			IUserSecurityStampStore<TUser>,
 			IUserEmailStore<TUser>,
@@ -28,8 +27,8 @@ namespace Microsoft.AspNetCore.Identity.MongoDB
 			IUserTwoFactorStore<TUser>,
 			IUserLockoutStore<TUser>,
 			IQueryableUserStore<TUser>,
-            IUserAuthenticationTokenStore<TUser>,
-            IUserAuthenticatorKeyStore<TUser>,
+			IUserAuthenticationTokenStore<TUser>,
+			IUserAuthenticatorKeyStore<TUser>,
 			IUserTwoFactorRecoveryCodeStore<TUser>
 		where TUser : IdentityUser
 	{
@@ -105,26 +104,6 @@ namespace Microsoft.AspNetCore.Identity.MongoDB
 
 		public virtual async Task<bool> HasPasswordAsync(TUser user, CancellationToken token)
 			=> user.HasPassword();
-
-		public virtual async Task AddToRoleAsync(TUser user, string normalizedRoleName, CancellationToken token)
-			=> user.AddRole(normalizedRoleName);
-
-		public virtual async Task RemoveFromRoleAsync(TUser user, string normalizedRoleName, CancellationToken token)
-			=> user.RemoveRole(normalizedRoleName);
-
-		// todo might have issue, I'm just storing Normalized only now, so I'm returning normalized here instead of not normalized.
-		// EF provider returns not noramlized here
-		// however, the rest of the API uses normalized (add/remove/isinrole) so maybe this approach is better anyways
-		// note: could always map normalized to not if people complain
-		public virtual async Task<IList<string>> GetRolesAsync(TUser user, CancellationToken token)
-			=> user.Roles;
-
-		public virtual async Task<bool> IsInRoleAsync(TUser user, string normalizedRoleName, CancellationToken token)
-			=> user.Roles.Contains(normalizedRoleName);
-
-		public virtual async Task<IList<TUser>> GetUsersInRoleAsync(string normalizedRoleName, CancellationToken token)
-			=> await _Users.Find(u => u.Roles.Contains(normalizedRoleName))
-				.ToListAsync(token);
 
 		public virtual async Task AddLoginAsync(TUser user, UserLoginInfo login, CancellationToken token)
 			=> user.AddLogin(login);
@@ -284,12 +263,12 @@ namespace Microsoft.AspNetCore.Identity.MongoDB
 		public virtual async Task<string> GetTokenAsync(TUser user, string loginProvider, string name, CancellationToken cancellationToken)
 			=> user.GetTokenValue(loginProvider, name);
 
-        #region IUserAuthenticatorKeyStore
-        public virtual async Task SetAuthenticatorKeyAsync(TUser user, string key, CancellationToken cancellationToken)
-            => user.SetAuthenticatorKey(key);
+		#region IUserAuthenticatorKeyStore
+		public virtual async Task SetAuthenticatorKeyAsync(TUser user, string key, CancellationToken cancellationToken)
+			=> user.SetAuthenticatorKey(key);
 
-        public virtual async Task<string> GetAuthenticatorKeyAsync(TUser user, CancellationToken cancellationToken)
-            => user.GetAuthenticatorKey();
+		public virtual async Task<string> GetAuthenticatorKeyAsync(TUser user, CancellationToken cancellationToken)
+			=> user.GetAuthenticatorKey();
 		#endregion
 
 		#region IUserTwoFactorRecoveryCodeStore

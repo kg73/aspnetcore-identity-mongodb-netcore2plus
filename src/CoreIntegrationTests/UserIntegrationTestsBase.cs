@@ -1,12 +1,12 @@
 ﻿namespace IntegrationTests
 {
-	using System;
-	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Identity.MongoDB;
 	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.DependencyInjection.Extensions;
 	using MongoDB.Driver;
 	using NUnit.Framework;
+	using System;
 
 	public class UserIntegrationTestsBase : AssertionHelper
 	{
@@ -35,7 +35,7 @@
 			Database.DropCollection("users");
 			Database.DropCollection("roles");
 
-			ServiceProvider = CreateServiceProvider<IdentityUser, IdentityRole>();
+			ServiceProvider = CreateServiceProvider<IdentityUser>();
 		}
 
 		protected UserManager<IdentityUser> GetUserManager()
@@ -44,15 +44,28 @@
 		protected RoleManager<IdentityRole> GetRoleManager()
 			=> ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
-		protected IServiceProvider CreateServiceProvider<TUser, TRole>(Action<IdentityOptions> optionsProvider = null)
+		protected IServiceProvider CreateServiceProvider<TUser>(Action<IdentityOptions> optionsProvider = null)
 			where TUser : IdentityUser
-			where TRole : IdentityRole
 		{
 			var services = new ServiceCollection();
 			optionsProvider = optionsProvider ?? (options => { });
-			services.AddIdentity<TUser, TRole>(optionsProvider)
+
+			services.TryAddScoped<IUserValidator<TUser>, UserValidator<TUser>>();
+			services.TryAddScoped<IPasswordValidator<TUser>, PasswordValidator<TUser>>();
+			services.TryAddScoped<IPasswordHasher<TUser>, PasswordHasher<TUser>>();
+			services.TryAddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+			// No interface for the error describer so we can add errors without rev'ing the interface
+			services.TryAddScoped<IdentityErrorDescriber>();
+			services.TryAddScoped<ISecurityStampValidator, SecurityStampValidator<TUser>>();
+			services.TryAddScoped<IUserClaimsPrincipalFactory<TUser>, UserClaimsPrincipalFactory<TUser>>();
+			services.TryAddScoped<UserManager<TUser>>();
+			services.TryAddScoped<SignInManager<TUser>>();
+
+			var idBuilder = new IdentityBuilder(typeof(TUser), services);
+
+			idBuilder
 				.AddDefaultTokenProviders()
-				.RegisterMongoStores<TUser, TRole>(_TestingConnectionString);
+				.RegisterMongoStores<TUser>(_TestingConnectionString);
 
 			services.AddLogging();
 
