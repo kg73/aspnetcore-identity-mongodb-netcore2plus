@@ -1,37 +1,39 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <Description>A MongoDB provider for ASP.NET Core 2 Identity framework.
-Upgrade https://github.com/g0t4/aspnet-identity-mongo / https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.MongoDB/ to netcore2</Description>
-    <VersionPrefix>2.0.0</VersionPrefix>
-    <Authors>thrixton</Authors>
-    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <PackageId>Contrib.Microsoft.AspNetCore.Identity.MongoDB</PackageId>
-    <PackageTags>aspnetcore2;mongo;mongodb;identity;membership</PackageTags>
-    <PackageReleaseNotes>Convert back to using DateTime to store LockoutEndDate, DateTimeOffset serializes to an array of values which could make it hard for people to sort on this and query on this. Also DateTime was used in the v2 driver, so this makes the upgrade story easier.</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/thrixton/aspnetcore-identity-mongodb-netcore2plus</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/thrixton/aspnetcore-identity-mongodb-netcore2plus/blob/Microsoft.AspNetCore.Identity.MongoDB/LICENSE</PackageLicenseUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/thrixton/aspnetcore-identity-mongodb-netcore2plus</RepositoryUrl>
-    <NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard2.0' ">2.0.0</NetStandardImplicitPackageVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Product>Microsoft.AspNetCore.Identity.MongoDB</Product>
-    <AssemblyName>Microsoft.AspNetCore.Identity.MongoDB</AssemblyName>
-    <Version>2.0.5</Version>
-    <Company>Yarra Software</Company>
-    <AssemblyVersion>2.0.0.5</AssemblyVersion>
-    <FileVersion>2.0.0.5</FileVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Description>
+			A MongoDB provider for ASP.NET Core 2 Identity framework.
+			Upgrade https://github.com/g0t4/aspnet-identity-mongo / https://www.nuget.org/packages/Microsoft.AspNetCore.Identity.MongoDB/ to netcore2
+		</Description>
+		<NuspecProperties>version=$(Version)</NuspecProperties>
+		<Authors>thrixton,kg73</Authors>
+		<TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<PackageId>kg73.Contrib.Microsoft.AspNetCore.Identity.MongoDB</PackageId>
+		<PackageTags>aspnetcore2;mongo;mongodb;identity;membership</PackageTags>
+		<PackageReleaseNotes>Convert back to using DateTime to store LockoutEndDate, DateTimeOffset serializes to an array of values which could make it hard for people to sort on this and query on this. Also DateTime was used in the v2 driver, so this makes the upgrade story easier.</PackageReleaseNotes>
+		<PackageProjectUrl>https://github.com/kg73/aspnetcore-identity-mongodb-netcore2plus</PackageProjectUrl>
+		<PackageLicenseUrl>https://github.com/kg73/aspnetcore-identity-mongodb-netcore2plus/blob/Microsoft.AspNetCore.Identity.MongoDB/LICENSE</PackageLicenseUrl>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/kg73/aspnetcore-identity-mongodb-netcore2plus</RepositoryUrl>
+		<NetStandardImplicitPackageVersion Condition=" '$(TargetFramework)' == 'netstandard2.0' ">2.0.0</NetStandardImplicitPackageVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Product>Microsoft.AspNetCore.Identity.MongoDB</Product>
+		<AssemblyName>Microsoft.AspNetCore.Identity.MongoDB</AssemblyName>
+		<Version>2.0.5</Version>
+		<Company>Yarra Software</Company>
+		<AssemblyVersion>2.0.0.5</AssemblyVersion>
+		<FileVersion>2.0.0.5</FileVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.3.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.1" />
+		<PackageReference Include="MongoDB.Driver" Version="2.3.0" />
+	</ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+		<Reference Include="System" />
+		<Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
 
 </Project>

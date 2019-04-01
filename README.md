@@ -1,5 +1,7 @@
 ﻿## Microsoft.AspNetCore.Identity.MongoDB
 
+**I only removed Roles in this fork**
+
 This is a MongoDB provider for the ASP.NET Core 2 Identity framework. This was ported from the v2 Identity framework that was a part of ASP.NET (AspNet.Identity.Mongo NuGet package)
 
 I've released a new package for the ASP.NET Core 2 Identity framework for the following reasons:
