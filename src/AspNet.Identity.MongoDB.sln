@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.Identi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ABD15C27-A514-450B-B4FD-0AEAB4D82128}"
 	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yaml = azure-pipelines.yaml
+		..\azure-pipelines.yaml = ..\azure-pipelines.yaml
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
