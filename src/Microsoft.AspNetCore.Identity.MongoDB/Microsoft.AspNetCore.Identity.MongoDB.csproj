@@ -7,7 +7,7 @@
 		</Description>
 		<NuspecProperties>version=$(Version)</NuspecProperties>
 		<Authors>thrixton,kg73</Authors>
-		<TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<PackageId>kg73.Contrib.Microsoft.AspNetCore.Identity.MongoDB</PackageId>
 		<PackageTags>aspnetcore2;mongo;mongodb;identity;membership</PackageTags>
